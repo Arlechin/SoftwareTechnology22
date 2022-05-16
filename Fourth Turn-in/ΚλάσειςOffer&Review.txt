@@ -1,0 +1,139 @@
+Χρήστης-User {
+	Attributes {
+		username:String,
+		password:String,
+		email:String,
+		phoneNumber:String,
+		dateOfRegistration: Date
+		role:bool
+			{1(PropertyManager),
+			0(Private)
+			}
+	},
+	Methods {}
+}
+Ιδιώτης-private {
+	Attributes {
+		numberOfReviews:int,
+		numberOfPublishedReviews:int
+	},
+	Methods {
+		requestFieldFilling():void
+		update():void,
+		requestOfferVerification():void
+	}
+}
+Διαχειριστής ακινήτου - Property Manager {
+	Attributes {
+		numberOfRatings:int,
+		totalRating:float
+		},
+	Methods {
+		requestFieldFilling():void,
+		verifyOfferRegistration():void,
+		update():void,
+	}
+}
+Ενημέρωση - Update {
+	Attributes {
+		sender:{
+			Private,
+			PropertyManager
+		},
+		Date:Date,
+		time:String,
+		updateText:String,
+		recipient:{
+			Private,
+			PropertyManager
+		}
+	},
+	Methods {
+		updateOnCounterOffer():void,
+		updateOnAcceptance():void,
+		updateOnRefusal():void,
+		updateOnMissingFields():void,
+		updateOnEmptyList():void,
+		updateOnFluctuation():void
+	}
+}
+Αξιολόγηση - Review {
+	Attributes {
+		numberOfStars:int,
+		description: String,
+		rating:float,
+		published:bool,
+		date:Date,
+		time:String
+	},
+	Methods {
+		addReview():Review,
+		modifyReview():Review,
+		checkForReviews():bool,
+	}
+}
+Συμφωνία - Agreement {
+	Attributes {
+		haveAgreed:bool,
+		party: {
+			PropertyManager,
+			Private
+			},
+		priceAgreed:float,
+		date:Date,
+		time:String,
+		ad:Ad
+	},
+	Methods {
+		checkForAgreement():bool,
+		mentionOnAgreement():void
+	}
+}
+Προσφορά - Offer {
+	Attributes {
+		offerApplication:Application,
+		composer:{
+			PropertyManager,
+			Private
+			}
+		isCounterOffer:bool,
+		offerRecipient:{
+			PropertyManager,
+			Private
+			},
+		offerID:int,
+		pmResponseToOffer:bool,
+		privateResponseToOffer:bool,
+		acceptanceVerified:bool
+	},
+	Methods {
+		createOffer():Offer
+		checkAcceptVerification():bool,
+		checkResponse():bool,
+		checkForApp():bool,
+		checkRequiredFields():bool,
+		checkCORegistrationVerification():bool,
+		checkForOfferVerification():bool,
+		checkForAvailableOffer():bool
+		selectOffer():Offer
+		
+	}
+}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+
+		
+	

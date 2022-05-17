@@ -1,0 +1,26 @@
+από κλείσιμο ακινήτου
+Ιδιώτης:
+methods=
+view()
+acceptDeal()
+
+διαχειριστής ακινήτου:
+methods=
+proposeDeal()
+
+ραντεβού:
+checkForCompleteAppointment()
+notAtLeastOneCompleteAppointment()
+
+διαθεσιμότητα ακινήτου:
+availableProperty()
+notAvailableProperty()
+
+πληρωμή:
+noOtherRequest()
+agreeWithDeal()
+denyDeal()
+otherRequestExists()
+
+
+

@@ -1,0 +1,19 @@
+Μήνυμα παραχώρησης 
+δικαιωμάτων τοποθεσίας-
+:UILocationPriviledge:
+askForLocationPriviledge()
+denyPriviledges()
+
+
+Μήνυμα οτι συμπληρώθηκαν τα υποχρεωτικά πεδία επιτυχώς-
+:UIRequiredFieldsFilled:
+filledRequiredFields()
+
+Μήνυμα να συμλπηρώσει τα υποχρεωτικά πεδία-
+:UIRequiredFieldsNotFilled:
+notFilledRequiredFields()
+
+Μήνυμα αν θέλει να ανεβάσει την αγγελία ή να την αποθηκεύσει στις πρόχειρες-
+:UIAskUploadOrAchives:
+chooseToUpload()
+saveToArchive()

@@ -1,0 +1,17 @@
+Μήνυμα επιβεβαίωσης ενέργειας
+:UIConfirmEnergy:
+agreeAndDeleteAd()
+denyAndNotDeleteAd() 
+
+Μήνυμα αν θέλει να επεξεργαστεί ή να διαγράψει την αγγελία -:UIEditOrDeleteNotification:
+chooseToEdit()
+chooseToDelete() 
+
+Ενημέρωση για αλλαγές -
+ :UIUpdateOnChanges:
+updateOnChanges()
+
+Μήνυμα επιβεβαίωσης ενέργειας
+:UIConfirmEnergy:
+agreeAndDeleteAd()
+denyAndNotDeleteAd() 

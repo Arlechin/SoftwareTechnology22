@@ -12,15 +12,34 @@ proposeDeal()
 checkForCompleteAppointment()
 notAtLeastOneCompleteAppointment()
 
-διαθεσιμότητα ακινήτου:
+ακίνητο:
 availableProperty()
 notAvailableProperty()
-
+ 
 πληρωμή:
 noOtherRequest()
-agreeWithDeal()
-denyDeal()
 otherRequestExists()
 
+Μήνυμα για καταβολή ποσού-
+UIMessageForPayment:
+acceptDeal()
+denyDeal()
+
+
+Μήνυμα στον διαχειριστή ακινήτου οτι δεν έγινε δεκτό το ποσό-
+:UINotAgreeOnPay:
+view()
+
+
+Καταβολή του συμφωνηθέντος ποσού:
+Pay:
+proceedWithPayment 
+
+ 
+
+Μήνυμα οτι δεν επιτρέπεται η ενέργεια-
+UIForbiddenAction: 
+notAtLeastOneCompletedAppointment()  
+otherRequestExists()
 
 

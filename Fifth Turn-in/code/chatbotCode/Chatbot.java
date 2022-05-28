@@ -3,13 +3,12 @@ public class Chatbot
 {
     public Chatbot()
     {
-    
-    }
+        }
 
     public void initialise()
     {
         System.out.println("Welcome to the Chatbot! How can we help you?");
-        System.out.println("Please Select the corresponding numbers for one of the numbers for the options below");
+        System.out.println("Please Select the corresponding number for the options below");
         System.out.println("1)Accountant's Problem 2)Technical Problem 3)Chat with a Human");
         Scanner choice = new Scanner(System.in);  // Create a Scanner object
         String problem = choice.nextLine();  // Read user input
@@ -40,12 +39,16 @@ public class Chatbot
     }
 }
 public void paymentProblem(){
+        UnsolvedProblems unsolvedProblems = new UnsolvedProblems();
+        SolvedProblems solvedProblems = new SolvedProblems();
         System.out.println("We're looking for your problem!");
         solvedProblems.searchSolvedProblems(payment);
         unsolvedProblems.searchUnsolvedProblems(payment);
 
     }
 public void paymentReceiveProblem(){
+        UnsolvedProblems unsolvedProblems = new UnsolvedProblems();
+        SolvedProblems solvedProblems = new SolvedProblems();
         System.out.println("We're looking for your problem!");
         solvedProblems.searchSolvedProblems(paymentreceive);
         unsolvedProblems.searchUnsolvedProblems(paymentreceive);
@@ -68,6 +71,8 @@ public void paymentReceiveProblem(){
 }
 public void postProblem(){
         System.out.println("We're looking for your problem!");
+        UnsolvedProblems unsolvedProblems = new UnsolvedProblems();
+        SolvedProblems solvedProblems = new SolvedProblems();
         solvedProblems.searchSolvedProblems(post);
         unsolvedProblems.searchUnsolvedProblems(post);
        
@@ -75,6 +80,8 @@ public void postProblem(){
     }
 public void signUpProblem(){
         System.out.println("We're looking for your problem!");
+        UnsolvedProblems unsolvedProblems = new UnsolvedProblems();
+        SolvedProblems solvedProblems = new SolvedProblems();
         solvedProblems.searchSolvedProblems(signup);
         unsolvedProblems.searchUnsolvedProblems(signup);
 
@@ -91,7 +98,7 @@ public void moreProblems(){
         if (morechoices == "1"){
             initialise();
         } else if(morechoices=="2"){
-            System.exit(0);
+            ;
         }
          else { 
             System.out.println("Sorry didn't quite get that");

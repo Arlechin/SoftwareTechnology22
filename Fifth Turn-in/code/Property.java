@@ -109,4 +109,8 @@ public class Property {
     public String getSpaces() {
         return spaces;
     }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 }

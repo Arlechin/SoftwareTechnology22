@@ -20,8 +20,9 @@ public class Ad {
     private List<Private> likedBy = new ArrayList<>();
     private boolean tour360Availability;
     private boolean virtualTourAvailability;
+    private PropertyManager owner;
 
-    public Ad(String title, String adType, String description, List<String> photos, List<String> videos, Property featuredProperty, LocalDateTime dateOfUpload, double price, double brokerageFee, boolean tour360Availability, boolean virtualTourAvailability){
+    public Ad(String title, String adType, String description, List<String> photos, List<String> videos, Property featuredProperty, LocalDateTime dateOfUpload, double price, double brokerageFee, boolean tour360Availability, boolean virtualTourAvailability, PropertyManager owner){
         this.title = title;
         this.adType = adType;
         this.description = description;
@@ -35,6 +36,7 @@ public class Ad {
         this.likedBy = null;
         this.tour360Availability = tour360Availability;
         this.virtualTourAvailability = virtualTourAvailability;
+        this.owner = owner;
     } // Constructor
 
     // Methods
@@ -104,5 +106,7 @@ public class Ad {
         return true;
     }
 
-
+    public PropertyManager getOwner() {
+        return owner;
+    }
 }

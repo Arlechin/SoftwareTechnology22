@@ -7,8 +7,8 @@ public class ScheduledAppointment extends Appointment {
     private Private participant;
     private String meetingSpot;
 
-    public ScheduledAppointment(PropertyManager host, String date, String timeslot, Private participant, String meetingSpot){
-        super(host, date, timeslot);
+    public ScheduledAppointment(PropertyManager host, String date, String timeslot, Ad ad, Private participant, String meetingSpot){
+        super(host, date, timeslot, ad);
         this.participant = participant;
         this.meetingSpot = meetingSpot;
     } // Constructor
@@ -37,7 +37,7 @@ public class ScheduledAppointment extends Appointment {
 
     public CompletedAppointment makeCompletedAppointment(){
 
-        CompletedAppointment completedAppointment = new CompletedAppointment(this.host, this.date, this.timeslot, this.participant, this.meetingSpot);
+        CompletedAppointment completedAppointment = new CompletedAppointment(this.host, this.date, this.timeslot, this.ad, this.participant, this.meetingSpot);
         return completedAppointment;
     }
 

@@ -5,8 +5,8 @@ public class CompletedAppointment extends Appointment {
     private Private participant;
     private String meetingSpot;
 
-    public CompletedAppointment(PropertyManager host, String date, String timeslot, Private participant, String meetingSpot){
-        super(host, date, timeslot);
+    public CompletedAppointment(PropertyManager host, String date, String timeslot, Ad ad, Private participant, String meetingSpot){
+        super(host, date, timeslot, ad);
         this.participant = participant;
         this.meetingSpot = meetingSpot;
     } // Constructor
@@ -19,5 +19,13 @@ public class CompletedAppointment extends Appointment {
 
     public boolean notAtLeastOneCompleteAppointment(){
         return true;
+    }
+
+    public Private getParticipant() {
+        return participant;
+    }
+
+    public String getMeetingSpot() {
+        return meetingSpot;
     }
 }

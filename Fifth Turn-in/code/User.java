@@ -21,4 +21,12 @@ public class User {
 
     // Methods
 
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }

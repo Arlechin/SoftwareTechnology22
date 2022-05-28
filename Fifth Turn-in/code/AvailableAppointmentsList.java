@@ -1,22 +1,25 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AvailableAppointmentsList {
 
     // Attributes
 
-    private List<AvailableAppointment> list;
+    private List<AvailableAppointment> list = new ArrayList<>();
 
-    public AvailableAppointmentsList(List<PropertyManager> propertyManagers){
+    public AvailableAppointmentsList(List<Ad> adsList){
 
         LocalDate today = LocalDate.now();
         LocalDate localDate;
         String date;
         String timeSlot;
+        Ad ad;
 
-        for (int k = 0; k < propertyManagers.size(); k++) {
+        for (int k = 0; k < adsList.size(); k++) {
 
             for (int i = 0; i < 7; i++) {
 
@@ -32,9 +35,25 @@ public class AvailableAppointmentsList {
                     to = from + 1;
                     timeSlot = from + " - " + to;
 
-                    AvailableAppointment availableAppointment = new AvailableAppointment(propertyManagers.get(k),date,timeSlot);
+                    AvailableAppointment availableAppointment = new AvailableAppointment(adsList.get(k).getOwner(),date,timeSlot, adsList.get(k));
                     list.add(availableAppointment);
                 }
+            }
+        }
+    }
+
+    public void showAvailableAppointments(Ad ad){
+        Iterator<AvailableAppointment> iterator = this.list.iterator();
+
+        boolean found = false;
+        int i = 1;
+
+        //simple iteration
+        while(iterator.hasNext()){
+            AvailableAppointment availableAppointment = iterator.next();
+            if (availableAppointment.getAd() == ad){
+                System.out.println(i + "." + availableAppointment.getDate() + " - " + availableAppointment.getTimeslot());
+                i += 1;
             }
         }
     }

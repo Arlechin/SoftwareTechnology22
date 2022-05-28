@@ -4,8 +4,8 @@ public class AvailableAppointment extends Appointment {
     private boolean available;
     private Private futureParticipant;
 
-    public AvailableAppointment(PropertyManager host, String date, String timeslot){
-        super(host, date, timeslot);
+    public AvailableAppointment(PropertyManager host, String date, String timeslot, Ad ad){
+        super(host, date, timeslot, ad);
         available = true;
         futureParticipant = null;
     } // Constructor
@@ -23,12 +23,13 @@ public class AvailableAppointment extends Appointment {
     }
 
     public void selectAvailableAppointment(Private futureParticipant){
+
         this.futureParticipant = futureParticipant;
     }
 
     public ScheduledAppointment scheduleAppointment(String meetingSpot){
 
-        ScheduledAppointment scheduledAppointment = new ScheduledAppointment(this.host, this.date, this.timeslot, this.futureParticipant, meetingSpot);
+        ScheduledAppointment scheduledAppointment = new ScheduledAppointment(this.host, this.date, this.timeslot, this.ad, this.futureParticipant, meetingSpot);
         this.available = false; // Appointment scheduled - no longer available
 
         return scheduledAppointment;

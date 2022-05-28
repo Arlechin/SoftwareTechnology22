@@ -9,12 +9,12 @@ public class PropertyManager extends User {
     private int numberOfRatings;
     private float totalRating;
 
-    public PropertyManager(String username, String password, String email, String phoneNumber, LocalDateTime dateOfRegistration, Boolean marked, int numberOfAdsUploaded, int numberOfRatings, float totalRating){
+    public PropertyManager(String username, String password, String email, String phoneNumber, LocalDateTime dateOfRegistration){
         super(username, password, email, phoneNumber, dateOfRegistration);
-        this.marked = marked;
-        this.numberOfAdsUploaded = numberOfAdsUploaded;
-        this.numberOfRatings = numberOfRatings;
-        this.totalRating = totalRating;
+        this.marked = false;
+        this.numberOfAdsUploaded = 0;
+        this.numberOfRatings = 0;
+        this.totalRating = 0;
     } // Constructor
 
     // Methods

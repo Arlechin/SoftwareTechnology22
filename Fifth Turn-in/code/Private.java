@@ -9,10 +9,10 @@ public class Private extends PropertyManager {
     private int numberOfPublishedReviews;
     private List<Ad> reportedAds;
 
-    public Private(String username, String password, String email, String phoneNumber, LocalDateTime dateOfRegistration, boolean marked, int numberOfAdsUploaded, int numberOfRatings, float totalRating, int numberOfReviews, int numberOfPublishedReviews){
-        super(username, password, email, phoneNumber, dateOfRegistration, marked, numberOfAdsUploaded, numberOfRatings, totalRating);
-        this.numberOfReviews = numberOfReviews;
-        this.numberOfPublishedReviews = numberOfPublishedReviews;
+    public Private(String username, String password, String email, String phoneNumber, LocalDateTime dateOfRegistration){
+        super(username, password, email, phoneNumber, dateOfRegistration);
+        this.numberOfReviews = 0;
+        this.numberOfPublishedReviews = 0;
     } // Constructor
 
     // Methods

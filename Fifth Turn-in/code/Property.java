@@ -40,4 +40,73 @@ public class Property {
     } // Constructor
 
     // Methods
+
+    public boolean availableProperty(){
+
+        return available;
+    }
+
+    public boolean isUrbanPlan() {
+        return urbanPlan;
+    }
+
+    public float getArea() {
+        return area;
+    }
+
+    public float getCoverFactor() {
+        return coverFactor;
+    }
+
+    public float getStructureFactor() {
+        return structureFactor;
+    }
+
+    public int getYearOfConstruction() {
+        return yearOfConstruction;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getBuildingBills() {
+        return buildingBills;
+    }
+
+    public String getElectricalCurrentPhase() {
+        return electricalCurrentPhase;
+    }
+
+    public String getEnergyClass() {
+        return energyClass;
+    }
+
+    public String getHeating() {
+        return heating;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public String getLandUseCategory() {
+        return landUseCategory;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public String getPropertyCategory() {
+        return propertyCategory;
+    }
+
+    public String getSpaces() {
+        return spaces;
+    }
 }

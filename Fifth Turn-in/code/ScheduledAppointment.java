@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class ScheduledAppointment extends Appointment {
 
     // Attributes
@@ -5,27 +7,52 @@ public class ScheduledAppointment extends Appointment {
     private Private participant;
     private String meetingSpot;
 
-    public ScheduledAppointment(PropertyManager host, String timeslot, Private participant, String meetingSpot){
-        super(host, timeslot);
+    public ScheduledAppointment(PropertyManager host, String date, String timeslot, Private participant, String meetingSpot){
+        super(host, date, timeslot);
         this.participant = participant;
         this.meetingSpot = meetingSpot;
     } // Constructor
 
     // Methods
 
-    public boolean checkForScheduledAppointment(){
-        return true;
+    public void setParticipant(Private participant){
+
+        this.participant = participant;
     }
 
-    public void saveAppointment(){
+    public Private getParticipant(){
 
+        return this.participant;
     }
 
-    public void deleteAppointment(){
+    public void setMeetingSpot(String meetingSpot){
 
+        this.meetingSpot = meetingSpot;
     }
 
-    public void cancelScheduleAppointment(){
+    public String getMeetingSpot(){
 
+        return this.meetingSpot;
+    }
+
+    public CompletedAppointment makeCompletedAppointment(){
+
+        CompletedAppointment completedAppointment = new CompletedAppointment(this.host, this.date, this.timeslot, this.participant, this.meetingSpot);
+        return completedAppointment;
+    }
+
+    public boolean checkForScheduledAppointment(List<ScheduledAppointment> scheduledAppointmentsList){
+
+        return scheduledAppointmentsList.contains(this);
+    }
+
+    public void save(List<ScheduledAppointment> scheduledAppointmentsList){
+
+        scheduledAppointmentsList.add(this);
+    }
+
+    public void delete(List<ScheduledAppointment> scheduledAppointmentsList){
+
+        scheduledAppointmentsList.remove(this);
     }
 }

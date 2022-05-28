@@ -34,8 +34,8 @@ public class SolvedProblems
     System.out.println("Is this your problem? Choose one of the numbers for the options below");
      System.out.println("1)Yes 2)No");
         Scanner checkproblem = new Scanner(System.in);  
-        String problemanswer = checkproblem.nextLine();  
-        if (problemanswer=="1"){
+        int problemanswer = Integer.parseInt(checkproblem.nextLine());  
+        if (problemanswer==1){
         System.out.println(problems[1][j]);
         chatbot.moreProblems();
         } else {

@@ -42,16 +42,16 @@ public void paymentProblem(){
         UnsolvedProblems unsolvedProblems = new UnsolvedProblems();
         SolvedProblems solvedProblems = new SolvedProblems();
         System.out.println("We're looking for your problem!");
-        solvedProblems.searchSolvedProblems(payment);
-        unsolvedProblems.searchUnsolvedProblems(payment);
+        solvedProblems.searchSolvedProblems("payment", this);
+        unsolvedProblems.searchUnsolvedProblems("payment", this);
 
     }
 public void paymentReceiveProblem(){
         UnsolvedProblems unsolvedProblems = new UnsolvedProblems();
         SolvedProblems solvedProblems = new SolvedProblems();
         System.out.println("We're looking for your problem!");
-        solvedProblems.searchSolvedProblems(paymentreceive);
-        unsolvedProblems.searchUnsolvedProblems(paymentreceive);
+        solvedProblems.searchSolvedProblems("paymentreceive", this);
+        unsolvedProblems.searchUnsolvedProblems("paymentreceive", this);
 
     }
     public void technicalProblem(){
@@ -73,8 +73,8 @@ public void postProblem(){
         System.out.println("We're looking for your problem!");
         UnsolvedProblems unsolvedProblems = new UnsolvedProblems();
         SolvedProblems solvedProblems = new SolvedProblems();
-        solvedProblems.searchSolvedProblems(post);
-        unsolvedProblems.searchUnsolvedProblems(post);
+        solvedProblems.searchSolvedProblems("post", this);
+        unsolvedProblems.searchUnsolvedProblems("post", this);
        
 
     }
@@ -82,13 +82,14 @@ public void signUpProblem(){
         System.out.println("We're looking for your problem!");
         UnsolvedProblems unsolvedProblems = new UnsolvedProblems();
         SolvedProblems solvedProblems = new SolvedProblems();
-        solvedProblems.searchSolvedProblems(signup);
-        unsolvedProblems.searchUnsolvedProblems(signup);
+        solvedProblems.searchSolvedProblems("signup", this);
+        unsolvedProblems.searchUnsolvedProblems("signup", this );
 
     }
         public void chat(){
         System.out.println("Passing you on to a human now");
-        Employee.chat();
+        Employee employee= new Employee();
+        employee.chat();
 }
 public void moreProblems(){
      System.out.println("Do you have more problems? Choose one of the numbers for the options below");
@@ -103,5 +104,6 @@ public void moreProblems(){
          else { 
             System.out.println("Sorry didn't quite get that");
             moreProblems();
+}
 }
 }

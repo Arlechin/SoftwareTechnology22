@@ -1,17 +1,17 @@
 import java.util.Scanner; 
 public class UnsolvedProblems
 {
+    String[] problems = {"Peiraios Bank e-POS is out of order", "Received a message saying transaction terminated error 808", "Address doesn't show properly on the map of the Ad", "Error accepting the e-mail address"} ; 
 
     /**
      * Κατασευαστής αντικειμένων της κλάσης solvedProblems
      */
     public void unsolvedProblems()
     {
-        String[] problems = {"Peiraios Bank e-POS is out of order", "Received a message saying transaction terminated error 808", "Address doesn't show properly on the map of the Ad", "Error accepting the e-mail address"} ; 
-    
+       
 }
     
-    public void  searchUnsolvedProblems(String  p)
+    public void  searchUnsolvedProblems(String  p, Chatbot chatbot)
     {
         if (p=="payment"){
             System.out.println(problems[0]);
@@ -33,12 +33,12 @@ public class UnsolvedProblems
     System.out.println("1)Yes 2)No");
     Scanner checkproblem = new Scanner(System.in);  // Create a Scanner object
     String problemanswer = checkproblem.nextLine();  // Read user input
-     if (problemanswer="1"){
+     if (problemanswer=="1"){
       System.out.println("Our team is already working hard to resolve your problem");
-      Chatbot.moreProblems();
+      chatbot.moreProblems();
       } else {
          System.out.println("Redirecting you to a human");
-          Chatbot.chat();
+          chatbot.chat();
         } 
 
 }

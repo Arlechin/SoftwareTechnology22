@@ -1,0 +1,106 @@
+
+Ενημέρωση - Update extends AvailableOffersList{
+	Attributes {
+		sender:{
+			Private,
+			PropertyManager
+		},
+		Date:Date,
+		time:String,
+		updateText:String,
+		recipient:{
+			Private,
+			PropertyManager
+		}
+	},
+	Methods {
+	Update(Private sender, PropertyManager recipient, LocalDateTime dateSent, Ad adSelected, String updateText)//constructor
+		updateOnNewOffer(Private sender, Offer offerSelected):void
+		updateOnInterestedParty(Private sender, String update):void
+	}
+}
+
+Προσφορά - Offer extends Applications {
+	Attributes {
+		
+		senderOfApplication:Private,
+		isCounterOffer:bool,
+		recipientOfApplication:PropertyManager,
+		offerID:AtomicInteger,
+		pmResponseToOffer:bool,
+		privateResponseToOffer:bool,
+		acceptanceVerified:bool
+	},
+	Methods {
+		Offer(Private senderOfApplication,PropertyManager recipientOfApplication,Ad adSelected)//constructor
+		getIsCO():boolean,
+		getOfferID():AtomicInteger,
+		getPMResponse():Boolean,
+		getPrivateResponse():Boolean,
+		getSenderOfApplication():Private,
+		getRecipientOfApplication():PropertyManager,
+		getAdSelected():Ad,
+		checkForOfferVerification():boolean		
+	}
+}
+		
+Λίστα Διαθέσιμων προσφορών - AvailableOffersList extends Offer {
+	Attributes {
+		list:Offer<List>
+	},
+	Methods {
+		AvailableOffersList(Private senderOfApplication,PropertyManager recipientOfApplication,Ad adSelected)//constructor
+		add1(Offer offer):void,
+		printList():void
+	}
+}
+
+Αιτήσεις προσφορών - Applications {
+	Attributes {
+		timeOfApplication:LocalDateTime,
+		senderOfApplication:Private,
+		recipientOfApplication:PropertyManager,
+		priceApplied:float,
+		withInstallments:boolean,
+		appComments:String,
+		adSelected:Ad
+		},
+	Methods {
+		Applications(Private senderOfApplication,PropertyManager recipientOfApplication, Ad adSelected),//constructor
+		getPriceApplied():float,
+		getRecipientOfApplication():PropertyManager,
+		getSenderOfApplication():Private,
+		selectAd(List<Ad> adsList):Ad,
+		requestFieldFilling():Boolean,
+	}
+}
+
+main {
+	Attributes {
+		applicationsList: List<Applications>,
+		propertyManagerList: List<PropertyManager>,
+	},
+	Methods {
+		fillPropertyManagerList(List<PropertyManager> propertyManagerList):public static void,
+		fillOfferApplicationsList(List<Applications> applicationsList, List<Private> privatesList,List<PropertyManager> propertyManagerList, List<Ad> adsList):public static void,
+		MakeAnOffer(Private privateCreatingOffer, PropertyManager PMRecipientOfOffer,Ad selectedAd, List<Applications> applicationsList, List<Private> privatesList, List<PropertyManager> propertyManagerList):public static Offer,
+		
+	}
+	
+}		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+
+		
+	

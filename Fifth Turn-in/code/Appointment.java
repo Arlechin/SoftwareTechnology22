@@ -1,35 +1,60 @@
+import java.util.List;
+
 public class Appointment {
 
     // Attributes
 
-    protected PropertyManager host;
-    protected String date;
-    protected String timeslot;
-    protected Ad ad;
+    private Private participant;
+    private String meetingSpot;
+    private Timeslot timeslot;
+    private  boolean completed;
 
-    public Appointment(PropertyManager host, String date, String timeslot, Ad ad){
-        this.host = host;
-        this.date = date;
+    public Appointment(Private participant, Timeslot timeslot){
+        this.participant = participant;
+        this.meetingSpot = null;
         this.timeslot = timeslot;
-        this.ad = ad;
+        this.completed = false;
     } // Constructor
 
     // Methods
 
+    public Private getParticipant(){
 
-    public Ad getAd() {
-        return ad;
+        return this.participant;
+    }
+    public void setParticipant(Private participant){
+
+        this.participant = participant;
     }
 
-    public PropertyManager getHost() {
-        return host;
+
+    public String getMeetingSpot(){
+
+        return this.meetingSpot;
     }
 
-    public String getDate() {
-        return date;
+    public void setMeetingSpot(String meetingSpot){
+
+        this.meetingSpot = meetingSpot;
     }
 
-    public String getTimeslot() {
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+
+    public Timeslot getTimeslot() {
         return timeslot;
+    }
+
+
+    public boolean checkForScheduledAppointment(List<Appointment> appointmentsList){
+
+        return appointmentsList.contains(this);
     }
 }

@@ -12,22 +12,22 @@ public class Request {
 
     // Methods
 
-    public void sendRequest(Ad requestForAd, List<Request> requestList, List<CompletedAppointment> completedAppointmentList){
+    public void sendRequest(Ad requestForAd, List<Request> requests, List<Appointment> appointments){
 
-        Iterator<CompletedAppointment> iterator = completedAppointmentList.iterator();
+        Iterator<Appointment> iterator = appointments.iterator();
         boolean found = false;
 
         //simple iteration
         while(iterator.hasNext()){
-            CompletedAppointment completedAppointment = iterator.next();
-            if ((completedAppointment.getParticipant() == this.sender) && (completedAppointment.getAd() == requestForAd)){
+            Appointment appointment = iterator.next();
+            if ((appointment.getParticipant() == this.sender) && (appointment.getTimeslot().getAd() == requestForAd) && (appointment.isCompleted() == true)){
                 found = true;
                 break;
             }
         }
 
         if(found == true){
-            if(requestList.contains(this) == false){
+            if(requests.contains(this) == false){
                 System.out.println("Waiting for property manager to set payment");
                 try {
                     wait(10);

@@ -57,7 +57,7 @@ public class Main {
         brokersList.add(broker);
     }
 
-    public static void fillScheduledAppointmentsList(List<ScheduledAppointment> scheduledAppointmentsList){
+    /* public static void fillScheduledAppointmentsList(List<Appointment> appointments){
 
         // Local variables
         PropertyManager host;
@@ -73,7 +73,100 @@ public class Main {
         //ScheduledAppointment scheduledAppointment = new ScheduledAppointment(host ,timeslot, participant, meetingSpot);
 
         //scheduledAppointmentsList.add(scheduledAppointment);
+    }*/
+
+    public static void mainProgramPrivate(Private currentUser, List<Ad> adsList, List<Private> privatesList, List<Broker> brokersList, AppointmentsList appointmentsList, TimeslotsList timeslotsList){
+
+        Scanner in = new Scanner(System.in); // Create scanner
+        int option = 0; // Int input
+        String input; // String input
+
+        while (option != 7) {
+            System.out.println("1.Home \n2.Drawer \n3.Messages \n4.Deals \n5.Offers \n6.Search \n7.Exit");
+            option = Integer.parseInt(in.nextLine());
+
+            switch (option) {
+                case 1:
+                    System.out.println("1.Favorite Ads");
+                case 2:
+                    System.out.println("2.Drawer \n 1.My Appointments");
+                case 3:
+                    System.out.println("3.Messages");
+                case 4:
+                    System.out.println("4.Deals");
+                case 5:
+                    System.out.println("5.Offers");
+                case 6: {
+                    System.out.println("6.Search");
+
+                    //System.out.println("Enter search key...");
+                    //input = in.nextLine();
+
+                    //AdsList searchList = adsList.searchInAds(input);
+
+                    //searchList.printList();
+                    System.out.println("Search completed and private has chosen an ad.");
+                    Ad selectedAd = adsList.get(1);
+
+                    System.out.println(selectedAd.getTitle() + " - " + selectedAd.getAdType());
+                    System.out.println("Description: " + selectedAd.getDescription());
+                    System.out.println("Price: " + selectedAd.getPrice() + " + Brokerage fee: " + selectedAd.getBrokerageFee());
+                    System.out.println("Address: " + selectedAd.getFeaturedProperty().getAddress() + " ,Neighbourhood: " + selectedAd.getFeaturedProperty().getNeighborhood());
+
+                    System.out.println("\n1.More info \n2.Contact \n3.Appointment");
+                    option = Integer.parseInt(in.nextLine());
+
+                    if (option == 3) {
+                        Appointment appointment = appointmentsList.searchInAppointments(selectedAd, currentUser);
+                        if (appointment == null) {
+
+                            System.out.println("Select a timeslot:");
+                            List<Timeslot> list = timeslotsList.getAvailable(selectedAd);
+                            option = Integer.parseInt(in.nextLine());
+                            appointment = list.get(option-1).selectAvailableTimeslot(currentUser);
+                            appointmentsList.save(appointment);
+                        } else {
+
+                            System.out.println("You have already scheduled an appointment for this ad. What do you want to do?");
+                            System.out.println("1.Back \n2.Manage appointment");
+                            option = Integer.parseInt(in.nextLine());
+                        }
+                    }
+                    break;
+                }
+                case 7: {
+                    System.out.println("7.Exit");
+                }
+            }
+        }
     }
+
+    public static void mainProgramBroker(Broker currentUser, List<Ad> adsList, List<Private> privatesList, List<Broker> brokersList, AppointmentsList appointmentsList, TimeslotsList timeslotsList){
+
+        Scanner in = new Scanner(System.in); // Create scanner
+        int option; // Int input
+        String input; // String input
+
+        System.out.println("1.Home \n2.Drawer \n3.Messages \n4.Deals \n5.Offers \n6. Search");
+        option = Integer.parseInt(in.nextLine());
+
+        switch (option){
+            case 1:
+                System.out.println("Recently Added Ads");
+            case 2:
+                System.out.println("Drawer \n 1.My Appointments");
+            case 3:
+                System.out.println("Messages");
+            case 4:
+                System.out.println("Deals");
+            case 5:
+                System.out.println("Offers");
+            case 6: {
+                System.out.println("Search");
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         // Starter properties for testing
@@ -92,21 +185,20 @@ public class Main {
         List<Ad> adsList = new ArrayList<>();
         fillAdsList(adsList, propertiesList, brokersList);
 
-        // Starter scheduled appointments for testing
-        /*List<ScheduledAppointment> scheduledAppointmentsList = new ArrayList<>();
-        fillScheduledAppointmentsList(scheduledAppointmentsList);*/
+        // Initialize available appointments list
+        TimeslotsList timeslotsList = new TimeslotsList(adsList);
+
+        // Starter appointments for testing
+        AppointmentsList appointmentsList = new AppointmentsList();
 
         // Initialize scanner for user input
         Scanner in = new Scanner(System.in);
-        int option; // Int input
         String inputUsername; // String input
         String inputPassword; // String input
         String inputRole;
-        String input;
 
+        // Log In
         boolean logInFailed = true;
-
-        // Main program
 
         while (logInFailed == true) {
 
@@ -130,12 +222,19 @@ public class Main {
                         if (private1.getPassword().equals(inputPassword)) {
                             System.out.println("You are logged in!");
                             logInFailed = false;
+                            mainProgramPrivate(private1,adsList,privatesList,brokersList, appointmentsList, timeslotsList);
+                            break;
                         }
                         else {
-                            System.out.println("Log in failed! Wrong password. Try again...");
                             logInFailed = true;
                         }
                     }
+                    else {
+                        logInFailed = true;
+                    }
+                }
+                if (logInFailed == true){
+                    System.out.println("Log in failed! Try again...");
                 }
             }
             else if (inputRole.equals("Broker")) {
@@ -155,53 +254,20 @@ public class Main {
                         if (broker.getPassword().equals(inputPassword)) {
                             System.out.println("You are logged in!");
                             logInFailed = false;
+                            mainProgramBroker(broker,adsList,privatesList,brokersList, appointmentsList, timeslotsList);
+                            break;
                         }
                         else {
-                            System.out.println("Log in failed! Wrong password. Try again...");
                             logInFailed = true;
                         }
                     }
+                    else {
+                        logInFailed = true;
+                    }
                 }
-            }
-            else{
-
-            }
-        }
-
-        System.out.println("1.Home \n2.Drawer \n3.Messages \n4.Deals \n5.Offers \n6. Search");
-        option = Integer.parseInt(in.nextLine());
-
-        switch (option){
-            case 1:
-                System.out.println("Favorite Ads"); // se function anti se ui class (convention)
-            case 2:
-                System.out.println("Drawer \n 1.My Appointments");
-            case 3:
-                System.out.println("Messages");
-            case 4:
-                System.out.println("Deals");
-            case 5:
-                System.out.println("Offers");
-            case 6: {
-                System.out.println("Search");
-
-                System.out.println("Enter search key...");
-                //input = in.nextLine();
-
-                //AdsList searchList = adsList.searchInAds(input);
-
-                //searchList.printList();
-                System.out.println("1.More info \n2.Contact \n3.Appointment");
-                option = Integer.parseInt(in.nextLine());
-
-                AvailableAppointmentsList availableAppointmentsList = new AvailableAppointmentsList(adsList);
-
-                if (option == 3){
-                    availableAppointmentsList.showAvailableAppointments(adsList.get(0));
-                    option = Integer.parseInt(in.nextLine());
-                    
+                if (logInFailed == true){
+                    System.out.println("Log in failed! Try again...");
                 }
-
             }
         }
     }

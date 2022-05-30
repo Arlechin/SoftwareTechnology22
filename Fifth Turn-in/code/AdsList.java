@@ -42,7 +42,7 @@ public class AdsList {
         //simple iteration
         while(iterator.hasNext()){
             Ad ad = iterator.next();
-            if ((ad.getTitle() == inputString) || (ad.getAdType() == inputString) || (ad.getDescription() == inputString)) {
+            if (ad.getTitle().contains(inputString) || ad.getAdType().contains(inputString) || ad.getDescription().contains(inputString)) {
                 searchAdList.add1(ad);
             }
         }

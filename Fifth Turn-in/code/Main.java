@@ -6,6 +6,28 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static void UITimeslotsPage(Appointment appointment, Ad selectedAd, AppointmentsList appointmentsList, TimeslotsList timeslotsList, Private currentUser){
+
+        int option;
+        Scanner in = new Scanner(System.in); // Create scanner
+
+        if (appointment == null) {
+
+            System.out.println("Select a timeslot:");
+            List<Timeslot> list = timeslotsList.getAvailable(selectedAd);
+            option = Integer.parseInt(in.nextLine());
+            appointment = list.get(option-1).selectAvailableTimeslot(currentUser);
+            appointmentsList.save(appointment);
+        } else {
+
+            System.out.println("You have already scheduled an appointment for this ad. What do you want to do?");
+            System.out.println("1.Back \n2.Manage appointment");
+            option = Integer.parseInt(in.nextLine());
+            if (option == 2){
+                // Manage appointments
+            }
+        }
+    }
     public static void fillPropertiesList(List<Property> propertiesList){
 
         Property property = new Property(2002,"Detached house","Undefined","Ano Kifisia - Kifisia, Attiki","3","Ground floor","B+","South west","Autonomous - Natural gas","No", 1,1,"Double phase",true,"Urban development",140,true);
@@ -86,27 +108,80 @@ public class Main {
             option = Integer.parseInt(in.nextLine());
 
             switch (option) {
-                case 1:
-                    System.out.println("1.Favorite Ads");
-                case 2:
-                    System.out.println("2.Drawer \n 1.My Appointments");
-                case 3:
-                    System.out.println("3.Messages");
-                case 4:
-                    System.out.println("4.Deals");
-                case 5:
-                    System.out.println("5.Offers");
+                case 1: {
+                    System.out.println("Favorite Ads");
+                    break;
+                }
+                case 2: {
+                    System.out.println("Drawer \n0.My Appointments");
+                    option = Integer.parseInt(in.nextLine());
+
+                    if (option == 0){
+
+                        boolean back = false;
+
+                        while (back == false) {
+                            System.out.println("Select an appointment request or select 0 for more options:");
+                            List<Appointment> list = appointmentsList.getAppointments(currentUser);
+
+                            if (list == null) {
+                                System.out.println("No appointment request for the moment. Select 0 for more options.");
+                            }
+
+                            option = Integer.parseInt(in.nextLine());
+                            if (option == 0) {
+                                System.out.println("1.Scheduled appointments \n2.Completed appointments \n3.Back");
+                                // 1 -> Manage appointments
+                                // 2 -> Browse completed appointments and leave a review
+                                // 3 -> Back to menu
+                                option = Integer.parseInt(in.nextLine());
+                                if ((option == 1) || (option == 2)) {
+                                    System.out.println("Selected function not available for the moment. Going back to main menu...");
+                                }
+                                back = true;
+                            }
+                            else {
+                                Appointment selectedAppointment = list.get(option - 1);
+
+                                if (selectedAppointment.isAlternative() == false) {
+                                    System.out.println("Waiting for confirmation...");
+                                }
+                                else {
+                                    System.out.println("1.Verify appointment \n2.Propose an alternative timeslot \n3.Back");
+                                    option = Integer.parseInt(in.nextLine());
+                                    if (option == 1) {
+                                        selectedAppointment.setScheduled(true);
+                                    }
+                                    else if (option == 2) {
+                                        appointmentsList.delete(selectedAppointment);
+                                        UITimeslotsPage(null, selectedAppointment.getTimeslot().getAd(), appointmentsList, timeslotsList, currentUser);
+                                    }
+                                    else {
+                                        back = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 3: {
+                    System.out.println("Messages");
+                    break;
+                }
+                case 4: {
+                    System.out.println("Deals");
+                    break;
+                }
+                case 5: {
+                    System.out.println("Offers");
+                    break;
+                }
                 case 6: {
-                    System.out.println("6.Search");
+                    System.out.println("Search");
 
-                    //System.out.println("Enter search key...");
-                    //input = in.nextLine();
-
-                    //AdsList searchList = adsList.searchInAds(input);
-
-                    //searchList.printList();
                     System.out.println("Search completed and private has chosen an ad.");
-                    Ad selectedAd = adsList.get(1);
+                    Ad selectedAd = adsList.get(0);
 
                     System.out.println(selectedAd.getTitle() + " - " + selectedAd.getAdType());
                     System.out.println("Description: " + selectedAd.getDescription());
@@ -118,24 +193,12 @@ public class Main {
 
                     if (option == 3) {
                         Appointment appointment = appointmentsList.searchInAppointments(selectedAd, currentUser);
-                        if (appointment == null) {
-
-                            System.out.println("Select a timeslot:");
-                            List<Timeslot> list = timeslotsList.getAvailable(selectedAd);
-                            option = Integer.parseInt(in.nextLine());
-                            appointment = list.get(option-1).selectAvailableTimeslot(currentUser);
-                            appointmentsList.save(appointment);
-                        } else {
-
-                            System.out.println("You have already scheduled an appointment for this ad. What do you want to do?");
-                            System.out.println("1.Back \n2.Manage appointment");
-                            option = Integer.parseInt(in.nextLine());
-                        }
+                        UITimeslotsPage(appointment,selectedAd,appointmentsList,timeslotsList,currentUser);
                     }
                     break;
                 }
                 case 7: {
-                    System.out.println("7.Exit");
+                    System.out.println("Exit");
                 }
             }
         }
@@ -144,25 +207,124 @@ public class Main {
     public static void mainProgramBroker(Broker currentUser, List<Ad> adsList, List<Private> privatesList, List<Broker> brokersList, AppointmentsList appointmentsList, TimeslotsList timeslotsList){
 
         Scanner in = new Scanner(System.in); // Create scanner
-        int option; // Int input
+        int option = 0; // Int input
         String input; // String input
 
-        System.out.println("1.Home \n2.Drawer \n3.Messages \n4.Deals \n5.Offers \n6. Search");
-        option = Integer.parseInt(in.nextLine());
+        while (option != 7) {
 
-        switch (option){
-            case 1:
-                System.out.println("Recently Added Ads");
-            case 2:
-                System.out.println("Drawer \n 1.My Appointments");
-            case 3:
-                System.out.println("Messages");
-            case 4:
-                System.out.println("Deals");
-            case 5:
-                System.out.println("Offers");
-            case 6: {
-                System.out.println("Search");
+            System.out.println("1.Home \n2.Drawer \n3.Messages \n4.Deals \n5.Offers \n6.Search \n7.Exit");
+            option = Integer.parseInt(in.nextLine());
+
+            switch (option) {
+                case 1: {
+                    System.out.println("Recently Added Ads");
+                    break;
+                }
+                case 2: {
+                    System.out.println("Drawer");
+
+                    boolean back = false;
+
+                    while (back == false) {
+
+                        Iterator<Ad> iterator = adsList.iterator();
+
+                        int i = 1;
+                        List<Ad> brokersAdsList = new ArrayList<>();
+
+                        //simple iteration
+                        while (iterator.hasNext()) {
+                            Ad ad = iterator.next();
+                            if (ad.getOwner() == currentUser) {
+
+                                if (ad.getFeaturedProperty().availableProperty() == true) {
+
+                                    System.out.println(i + "." + ad.getTitle() + " - " + ad.getAdType());
+                                    System.out.println("Description: " + ad.getDescription());
+                                    System.out.println("Price: " + ad.getPrice() + " + Brokerage fee: " + ad.getBrokerageFee());
+                                    System.out.println("Address: " + ad.getFeaturedProperty().getAddress() + " ,Neighbourhood: " + ad.getFeaturedProperty().getNeighborhood());
+
+                                    i += 1;
+                                    brokersAdsList.add(ad);
+                                }
+                            }
+                        }
+
+                        System.out.println("Select an ad or select 0 to go back:");
+                        option = Integer.parseInt(in.nextLine());
+
+                        if (option == 0) {
+                            break;
+                        } else {
+                            Ad selectedAd = brokersAdsList.get(option - 1);
+
+                            System.out.println("Select an appointment request or select 0 for more options:");
+                            List<Appointment> list = appointmentsList.getAppointmentsByAd(currentUser, selectedAd);
+                            option = Integer.parseInt(in.nextLine());
+
+                            if (option == 0) {
+                                System.out.println("1.Scheduled appointments \n2.Completed appointments \n3.Back");
+                                // 1 -> Manage appointments
+                                // 2 -> Browse completed appointments
+                                // 3 -> Back to menu
+                                option = Integer.parseInt(in.nextLine());
+                                if ((option == 1) || (option == 2)) {
+                                    System.out.println("Selected function not available for the moment. Going back to main menu...");
+                                }
+                                back = true;
+                            }
+                            else {
+                                Appointment selectedAppointment = list.get(option - 1);
+
+                                System.out.println("1.Add meeting spot and verify appointment \n2.Propose an alternative timeslot \n3.Back");
+                                option = Integer.parseInt(in.nextLine());
+                                if (option == 1) {
+                                    System.out.println("Meeting spot:");
+                                    input = in.nextLine();
+                                    selectedAppointment.setMeetingSpot(input);
+                                    System.out.println(selectedAppointment.getMeetingSpot());
+                                    selectedAppointment.setScheduled(true);
+                                }
+                                else if (option == 2) {
+                                    System.out.println("Select a timeslot:");
+                                    List<Timeslot> timeslots = timeslotsList.getAvailable(selectedAd);
+                                    option = Integer.parseInt(in.nextLine());
+                                    Timeslot selectedTimeslot = timeslots.get(option - 1);
+                                    selectedAppointment.updateTimeslot(selectedAppointment.getTimeslot(), selectedTimeslot);
+
+                                    System.out.println("Meeting spot:");
+                                    input = in.nextLine();
+                                    selectedAppointment.setMeetingSpot(input);
+
+                                    selectedAppointment.setAlternative();
+                                }
+                                else {
+                                    back = true;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 3: {
+                    System.out.println("Messages");
+                    break;
+                }
+                case 4: {
+                    System.out.println("Deals");
+                    break;
+                }
+                case 5: {
+                    System.out.println("Offers");
+                    break;
+                }
+                case 6: {
+                    System.out.println("Search");
+                    break;
+                }
+                case 7: {
+                    System.out.println("Exit");
+                }
             }
         }
     }
@@ -196,11 +358,16 @@ public class Main {
         String inputUsername; // String input
         String inputPassword; // String input
         String inputRole;
+        int option;
 
         // Log In
         boolean logInFailed = true;
+        boolean logIn = false;
 
-        while (logInFailed == true) {
+        while (logInFailed || logIn) {
+
+            logIn = false;
+            logInFailed = true;
 
             System.out.println("Role: (Private or Broker)");
             inputRole = in.nextLine();
@@ -223,6 +390,11 @@ public class Main {
                             System.out.println("You are logged in!");
                             logInFailed = false;
                             mainProgramPrivate(private1,adsList,privatesList,brokersList, appointmentsList, timeslotsList);
+                            System.out.println("Sign in again?\n1.Yes    2.No");
+                            option = Integer.parseInt(in.nextLine());
+                            if (option == 1) {
+                                logIn = true;
+                            }
                             break;
                         }
                         else {
@@ -255,6 +427,11 @@ public class Main {
                             System.out.println("You are logged in!");
                             logInFailed = false;
                             mainProgramBroker(broker,adsList,privatesList,brokersList, appointmentsList, timeslotsList);
+                            System.out.println("Sign in again?\n1.Yes    2.No");
+                            option = Integer.parseInt(in.nextLine());
+                            if (option == 1) {
+                                logIn = true;
+                            }
                             break;
                         }
                         else {

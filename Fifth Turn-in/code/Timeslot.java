@@ -34,13 +34,17 @@ public class Timeslot{
         return host;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
     public void updateAvailability(boolean onDelete){
 
         if (onDelete == false){
-            this.available = false; // Appointment scheduled - no longer available
+            this.available = false; // Appointment scheduled - Timeslot no longer available
         }
         else{
-            this.available = true; // Appointment is available again
+            this.available = true; // Appointment deleted or modified - Timeslot is available again
         }
     }
 

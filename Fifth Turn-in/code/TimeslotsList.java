@@ -42,6 +42,7 @@ public class TimeslotsList {
     }
 
     public List<Timeslot> getAvailable(Ad ad){
+
         Iterator<Timeslot> iterator = this.list.iterator();
 
         int i = 1;
@@ -50,7 +51,7 @@ public class TimeslotsList {
         //simple iteration
         while(iterator.hasNext()){
             Timeslot timeslot = iterator.next();
-            if (timeslot.getAd() == ad){
+            if ((timeslot.getAd() == ad) && (timeslot.isAvailable() == true)){
                 System.out.println(i + "." + timeslot.getDate() + " - " + timeslot.getTime());
                 i += 1;
                 list.add(timeslot);

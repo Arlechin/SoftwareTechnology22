@@ -1,0 +1,26 @@
+από κλείσιμο ακινήτου
+
+κλάση: πληρωμή - payment:
+attributes: sum-double 
+
+
+methods:
+agreeWithDeal(Ad requestForAd)
+denyDeal(Ad requestForAd)
+setSum(doubleSum)
+
+κλάση: αίτημα -request:
+attributes: Private sender;
+            double sum;
+methods:
+sendRequest(Ad requestForAd, List<Request> requestList, List<CompletedAppointment> completedAppointmentList)
+UIAvailAppointmentPage(String input)
+
+κλάση: Ολοκληρωμένο Ραντεβού -CompletedAppointment
+
+attributes:Private participant;
+          String meetingSpot;
+
+methods: checkForCompleteAppointment
+         getParticipant() 
+	 getMeetingSpot

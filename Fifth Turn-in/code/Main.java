@@ -18,7 +18,8 @@ public class Main {
             option = Integer.parseInt(in.nextLine());
             appointment = list.get(option-1).selectAvailableTimeslot(currentUser);
             appointmentsList.save(appointment);
-        } else {
+        } else // UIAppointmentWarning
+        {
 
             System.out.println("You have already scheduled an appointment for this ad. What do you want to do?");
             System.out.println("1.Back \n2.Manage appointment");
@@ -124,8 +125,8 @@ public class Main {
                             System.out.println("Select an appointment request or select 0 for more options:");
                             List<Appointment> list = appointmentsList.getAppointments(currentUser);
 
-                            if (list == null) {
-                                System.out.println("No appointment request for the moment. Select 0 for more options.");
+                            if (list.isEmpty()) {
+                                System.out.println("No appointment requests for the moment. Select 0 for more options.");
                             }
 
                             option = Integer.parseInt(in.nextLine());
@@ -145,9 +146,14 @@ public class Main {
 
                                 if (selectedAppointment.isAlternative() == false) {
                                     System.out.println("Waiting for confirmation...");
+                                    System.out.println("Do you want to delete appointment request? \n 1.Yes     2.No");
+                                    option = Integer.parseInt(in.nextLine());
+                                    if (option == 1){
+                                        appointmentsList.delete(selectedAppointment);
+                                    }
                                 }
                                 else {
-                                    System.out.println("1.Verify appointment \n2.Propose an alternative timeslot \n3.Back");
+                                    System.out.println("1.Verify appointment \n2.Propose an alternative timeslot \n3.Delete appointment \n4.Back");
                                     option = Integer.parseInt(in.nextLine());
                                     if (option == 1) {
                                         selectedAppointment.setScheduled(true);
@@ -155,6 +161,9 @@ public class Main {
                                     else if (option == 2) {
                                         appointmentsList.delete(selectedAppointment);
                                         UITimeslotsPage(null, selectedAppointment.getTimeslot().getAd(), appointmentsList, timeslotsList, currentUser);
+                                    }
+                                    else if (option == 3){
+                                        appointmentsList.delete(selectedAppointment);
                                     }
                                     else {
                                         back = true;
@@ -254,52 +263,61 @@ public class Main {
                         option = Integer.parseInt(in.nextLine());
 
                         if (option == 0) {
-                            break;
-                        } else {
+                            back = true;
+                        }
+                        else {
                             Ad selectedAd = brokersAdsList.get(option - 1);
 
-                            System.out.println("Select an appointment request or select 0 for more options:");
-                            List<Appointment> list = appointmentsList.getAppointmentsByAd(currentUser, selectedAd);
-                            option = Integer.parseInt(in.nextLine());
+                            boolean backToAdSelection = false;
 
-                            if (option == 0) {
-                                System.out.println("1.Scheduled appointments \n2.Completed appointments \n3.Back");
-                                // 1 -> Manage appointments
-                                // 2 -> Browse completed appointments
-                                // 3 -> Back to menu
-                                option = Integer.parseInt(in.nextLine());
-                                if ((option == 1) || (option == 2)) {
-                                    System.out.println("Selected function not available for the moment. Going back to main menu...");
-                                }
-                                back = true;
-                            }
-                            else {
-                                Appointment selectedAppointment = list.get(option - 1);
+                            while (backToAdSelection == false) {
 
-                                System.out.println("1.Add meeting spot and verify appointment \n2.Propose an alternative timeslot \n3.Back");
-                                option = Integer.parseInt(in.nextLine());
-                                if (option == 1) {
-                                    System.out.println("Meeting spot:");
-                                    input = in.nextLine();
-                                    selectedAppointment.setMeetingSpot(input);
-                                    System.out.println(selectedAppointment.getMeetingSpot());
-                                    selectedAppointment.setScheduled(true);
+                                System.out.println("Select an appointment request or select 0 for more options:");
+                                List<Appointment> list = appointmentsList.getAppointmentsByAd(currentUser, selectedAd);
+
+                                if (list.isEmpty()) {
+                                    System.out.println("No appointment requests for the moment. Select 0 for more options.");
                                 }
-                                else if (option == 2) {
-                                    System.out.println("Select a timeslot:");
-                                    List<Timeslot> timeslots = timeslotsList.getAvailable(selectedAd);
+
+                                option = Integer.parseInt(in.nextLine());
+
+                                if (option == 0) {
+                                    System.out.println("1.Scheduled appointments \n2.Completed appointments \n3.Back");
+                                    // 1 -> Manage appointments
+                                    // 2 -> Browse completed appointments
+                                    // 3 -> Back to menu
                                     option = Integer.parseInt(in.nextLine());
-                                    Timeslot selectedTimeslot = timeslots.get(option - 1);
-                                    selectedAppointment.updateTimeslot(selectedAppointment.getTimeslot(), selectedTimeslot);
+                                    if ((option == 1) || (option == 2)) {
+                                        System.out.println("Selected function not available for the moment. Going back to main menu...");
+                                    }
+                                    backToAdSelection = true;
+                                } else {
+                                    Appointment selectedAppointment = list.get(option - 1);
 
-                                    System.out.println("Meeting spot:");
-                                    input = in.nextLine();
-                                    selectedAppointment.setMeetingSpot(input);
+                                    System.out.println("1.Add meeting spot and verify appointment \n2.Propose an alternative timeslot \n3.Delete appointment \n4.Back");
+                                    option = Integer.parseInt(in.nextLine());
+                                    if (option == 1) {
+                                        System.out.println("Meeting spot:");
+                                        input = in.nextLine();
+                                        selectedAppointment.setMeetingSpot(input);
+                                        selectedAppointment.setScheduled(true);
+                                    } else if (option == 2) {
+                                        System.out.println("Select a timeslot:");
+                                        List<Timeslot> timeslots = timeslotsList.getAvailable(selectedAd);
+                                        option = Integer.parseInt(in.nextLine());
+                                        Timeslot selectedTimeslot = timeslots.get(option - 1);
+                                        selectedAppointment.updateTimeslot(selectedAppointment.getTimeslot(), selectedTimeslot);
 
-                                    selectedAppointment.setAlternative();
-                                }
-                                else {
-                                    back = true;
+                                        System.out.println("Meeting spot:");
+                                        input = in.nextLine();
+                                        selectedAppointment.setMeetingSpot(input);
+
+                                        selectedAppointment.setAlternative();
+                                    } else if (option == 3) {
+                                        appointmentsList.delete(selectedAppointment);
+                                    } else {
+                                        backToAdSelection = true;
+                                    }
                                 }
                             }
                         }

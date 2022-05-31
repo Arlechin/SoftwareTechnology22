@@ -21,7 +21,7 @@ public class AppointmentsList {
         //simple iteration
         while(iterator.hasNext()){
             Appointment appointment = iterator.next();
-            if (appointment.getParticipant() == participant || appointment.getTimeslot().getAd() == relatedAd) {
+            if ((appointment.getParticipant() == participant) && (appointment.getTimeslot().getAd() == relatedAd)) {
                 return appointment;
             }
         }

@@ -296,7 +296,7 @@ public class Main {
                     Update updateToPM = new Update(ourPrivate, application.getRecipientOfApplication(), LocalDateTime.now(),adSelected, textToPM);
                     updateToPM.updateOnNewOffer(ourPrivate,ourOffer);
                 }else{
-                    //AvailableOffersList.printList();
+                    availableOffersList.printList();
                     System.out.println("Do you fancy any of the above Offers? Type the desired offer's number or type 0 if you are not interested at all.");
                     int adNumber = Integer.parseInt(in.nextLine());
                     if(adNumber==0){
